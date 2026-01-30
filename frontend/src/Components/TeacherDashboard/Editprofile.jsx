@@ -4,7 +4,7 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
 
-const EditProfile = ({ setActiveSection }) => {
+const Editprofile = ({ setActiveSection }) => {
   const navigate = useNavigate();
   const { uid } = useParams();
   const { user, setUser } = useContext(UserContext);
@@ -105,31 +105,6 @@ const EditProfile = ({ setActiveSection }) => {
     }));
   };
 
-  // Add a new tech stack
-  const addTechStack = () => {
-    setFormData((prev) => ({
-      ...prev,
-      techStacks: [...prev.techStacks, ""],
-    }));
-  };
-
-  // Remove a tech stack
-  const removeTechStack = (index) => {
-    setFormData((prev) => ({
-      ...prev,
-      techStacks: prev.techStacks.filter((_, i) => i !== index),
-    }));
-  };
-
-  // Handle changes in tech stack input
-  const handleTechStackChange = (index, value) => {
-    const updatedTechStacks = [...formData.techStacks];
-    updatedTechStacks[index] = value;
-    setFormData((prev) => ({
-      ...prev,
-      techStacks: updatedTechStacks,
-    }));
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -145,7 +120,7 @@ const EditProfile = ({ setActiveSection }) => {
         headers: { "Content-Type": "application/json" }, // Set content type to JSON
       });
       setActiveSection(() => "profile");
-      navigate(`/studentdashboard/${uid}`);
+      navigate(`/teacherdashboard/${uid}`);
     } catch (error) {
       console.error("Error updating profile:", error);
     }
@@ -237,17 +212,6 @@ const EditProfile = ({ setActiveSection }) => {
             />
           </div>
           <div className="flex flex-col">
-            <label className="mb-2">Roll No.</label>
-            <input
-              type="text"
-              name="rollNo"
-              value={formData.rollNo}
-              onChange={handleChange}
-              className="p-2 border rounded"
-              required
-            />
-          </div>
-          <div className="flex flex-col">
             <label className="mb-2">Section</label>
             <input
               type="text"
@@ -265,31 +229,11 @@ const EditProfile = ({ setActiveSection }) => {
         <h4 className="text-lg font-semibold mt-6 mb-4">Social Profiles</h4>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="flex flex-col">
-            <label className="mb-2">Portfolio</label>
-            <input
-              type="text"
-              name="portfolio"
-              value={formData.portfolio}
-              onChange={handleChange}
-              className="p-2 border rounded"
-            />
-          </div>
-          <div className="flex flex-col">
             <label className="mb-2">LinkedIn</label>
             <input
               type="text"
               name="linkedin"
               value={formData.linkedin}
-              onChange={handleChange}
-              className="p-2 border rounded"
-            />
-          </div>
-          <div className="flex flex-col">
-            <label className="mb-2">GitHub</label>
-            <input
-              type="text"
-              name="github"
-              value={formData.github}
               onChange={handleChange}
               className="p-2 border rounded"
             />
@@ -342,97 +286,6 @@ const EditProfile = ({ setActiveSection }) => {
           + Add Job
         </button>
 
-        {/* Coding Profiles */}
-        <h4 className="text-lg font-semibold mt-6 mb-4">Coding Profiles</h4>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="flex flex-col">
-            <label className="mb-2">LeetCode</label>
-            <input
-              type="text"
-              name="leetcode"
-              value={formData?.codingProfiles?.leetcode}
-              onChange={(e) =>
-                setFormData((prev) => ({
-                  ...prev,
-                  codingProfiles: {
-                    ...prev.codingProfiles,
-                    leetcode: e.target.value,
-                  },
-                }))
-              }
-              className="p-2 border rounded"
-            />
-          </div>
-          <div className="flex flex-col">
-            <label className="mb-2">CodeChef</label>
-            <input
-              type="text"
-              name="codechef"
-              value={formData?.codingProfiles?.codechef}
-              onChange={(e) =>
-                setFormData((prev) => ({
-                  ...prev,
-                  codingProfiles: {
-                    ...prev.codingProfiles,
-                    codechef: e.target.value,
-                  },
-                }))
-              }
-              className="p-2 border rounded"
-            />
-          </div>
-          <div className="flex flex-col">
-            <label className="mb-2">CodeForces</label>
-            <input
-              type="text"
-              name="codeforces"
-              value={formData?.codingProfiles?.codeforces}
-              onChange={(e) =>
-                setFormData((prev) => ({
-                  ...prev,
-                  codingProfiles: {
-                    ...prev.codingProfiles,
-                    codeforces: e.target.value,
-                  },
-                }))
-              }
-              className="p-2 border rounded"
-            />
-          </div>
-        </div>
-
-        {/* Tech Stacks */}
-        <div className="mt-6">
-          <h4 className="text-lg font-semibold mb-4">Tech Stacks</h4>
-          <div className="flex flex-col space-y-2">
-            {formData.techStacks.map((tech, index) => (
-              <div key={index} className="flex items-center space-x-2">
-                <input
-                  type="text"
-                  value={tech}
-                  onChange={(e) => handleTechStackChange(index, e.target.value)}
-                  className="p-2 border rounded flex-1"
-                  placeholder="Enter a tech stack"
-                />
-                <button
-                  type="button"
-                  onClick={() => removeTechStack(index)}
-                  className="bg-red-500 text-white px-3 py-1 rounded"
-                >
-                  Remove
-                </button>
-              </div>
-            ))}
-            <button
-              type="button"
-              onClick={addTechStack}
-              className="bg-blue-500 text-white px-4 py-2 rounded"
-            >
-              + Add Tech Stack
-            </button>
-          </div>
-        </div>
-
         {/* Profile Image */}
         <h4 className="text-lg font-semibold mt-6 mb-4">Profile Image</h4>
         <div>
@@ -463,4 +316,4 @@ const EditProfile = ({ setActiveSection }) => {
   );
 };
 
-export default EditProfile;
+export default Editprofile;
